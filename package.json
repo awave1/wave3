@@ -1,0 +1,11 @@
+{
+  "name": "wave3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:awave1/wave3.git",
+  "author": "awave1 <artgolovin96@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "^2.6.8"
+  }
+}
