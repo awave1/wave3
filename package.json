@@ -18,6 +18,7 @@
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "3.3.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
@@ -37,5 +38,10 @@
     "ts-node": "^10.1.0",
     "typechain": "^5.1.2",
     "typescript": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
