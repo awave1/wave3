@@ -22,6 +22,7 @@ async function runMain() {
     await main();
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
