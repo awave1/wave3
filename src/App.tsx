@@ -40,26 +40,10 @@ export function App() {
     setCurrentUser(accounts[0]);
   };
 
-  const props = useSpring({
-    x: currentUser ? 1 : 0,
-    config: { duration: 1000 },
-  });
-
   return (
     <div className="App">
       <header className="App-header">
-        <animated.div
-          style={{
-            transform: props.x
-              .to({
-                range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
-                output: [1, 0.97, 0.9, 1.5, 0.9, 2.0, 1.03, 1],
-              })
-              .to((x) => `scale(${x})`),
-          }}
-        >
-          {currentUser ? `👋` : `😱`}
-        </animated.div>
+        <animated.div>{currentUser ? `👋` : `😱`}</animated.div>
         {active && !currentUser ? (
           <button onClick={onConnectWallet}>Connect</button>
         ) : null}
