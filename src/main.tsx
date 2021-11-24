@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { App } from "features/App";
-import "index.css";
+import "./index.css";
 
 const queryClient = new QueryClient();
 
