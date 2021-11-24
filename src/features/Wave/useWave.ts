@@ -15,6 +15,8 @@ export function useWave(): UseWaveProps {
     isError,
     refetch: refetchWaveCount,
   } = useWaveCount();
+  const [mining, setMining] = useState(false);
+  const [waveHash, setWaveHash] = useState("");
 
   const onWaveClicked = async () => {
     if (!ethProvider) {
@@ -34,18 +36,29 @@ export function useWave(): UseWaveProps {
       signer
     );
 
-    const waveToken = await wavePortalContract.wave();
-    console.log("mining ...", waveToken.hash);
+    try {
+      const waveToken = await wavePortalContract.wave();
+      console.log("mining ...", waveToken.hash);
+      setWaveHash(waveToken.hash);
 
-    await waveToken.wait();
-    console.log("minted ✅", waveToken.hash);
+      setMining(true);
 
-    refetchWaveCount();
+      await waveToken.wait();
+      console.log("minted ✅", waveToken.hash);
+
+      refetchWaveCount();
+    } catch (err) {
+      console.error("Failed to mint the wave", err);
+    } finally {
+      setMining(false);
+    }
   };
 
   return {
     models: {
       waveCount: isLoading || isError ? 0 : waveCount,
+      mining,
+      waveHash,
     },
     handlers: {
       onWaveClicked,
