@@ -11,7 +11,8 @@
     "baseUrl": "./src",
     "paths": {
       "@wave3/*": ["./*"],
-      "features/*": ["./features/*"]
+      "features/*": ["./features/*"],
+      "domains/*": ["./domains/*"]
     },
     "outDir": "dist",
     "declaration": true,

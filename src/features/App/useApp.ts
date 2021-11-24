@@ -1,29 +1,13 @@
-import { useEffect, useState } from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
-import type { EthereumProvider } from "@wave3/types";
+import { useState } from "react";
 import type { UseAppProps } from "features/App/types";
+import { useWallet } from "domains/wallet/hooks/useWallet";
 
 export function useApp(): UseAppProps {
-  const [active, setActive] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
-  const [ethProvider, setEthProvider] = useState<EthereumProvider | null>(null);
-
-  const checkWalletConnection = async () => {
-    const provider = await detectEthereumProvider({ mustBeMetaMask: true });
-    if (provider) {
-      setEthProvider((window?.ethereum as EthereumProvider) ?? null);
-      setActive(true);
-    } else {
-      console.warn("Metamask isn't connected");
-    }
-  };
-
-  useEffect(() => {
-    checkWalletConnection();
-  }, []);
+  const { isLoading, isError, data: ethProvider } = useWallet();
 
   const onConnectWalletClicked = async () => {
-    if (!active) {
+    if (isError && !isLoading && !ethProvider) {
       console.warn("Metamask isn't connected");
       return;
     }
@@ -42,7 +26,8 @@ export function useApp(): UseAppProps {
   return {
     models: {
       user: currentUser,
-      active,
+      active: !!ethProvider && !isLoading && !isError,
+      isLoading,
     },
     handlers: {
       onConnectWalletClicked,
