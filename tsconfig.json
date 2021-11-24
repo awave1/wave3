@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
-      "@wave3": ["./*"],
+      "@wave3": ["./src/*"],
       "features": ["./features/*"]
     },
     "outDir": "dist",
