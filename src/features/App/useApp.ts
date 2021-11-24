@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSpring, animated } from "react-spring";
 import detectEthereumProvider from "@metamask/detect-provider";
-import type { EthereumProvider } from "./types";
-import "./App.css";
+import type { EthereumProvider } from "../../types";
+import type { UseAppProps } from "features/App/types";
 
-export function App() {
+export function useApp(): UseAppProps {
   const [active, setActive] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [ethProvider, setEthProvider] = useState<EthereumProvider | null>(null);
@@ -23,7 +22,7 @@ export function App() {
     checkWalletConnection();
   }, []);
 
-  const onConnectWallet = async () => {
+  const onConnectWalletClicked = async () => {
     if (!active) {
       console.warn("Metamask isn't connected");
       return;
@@ -40,14 +39,13 @@ export function App() {
     setCurrentUser(accounts[0]);
   };
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <animated.div>{currentUser ? `👋` : `😱`}</animated.div>
-        {active && !currentUser ? (
-          <button onClick={onConnectWallet}>Connect</button>
-        ) : null}
-      </header>
-    </div>
-  );
+  return {
+    models: {
+      user: currentUser,
+      active,
+    },
+    handlers: {
+      onConnectWalletClicked,
+    },
+  };
 }
