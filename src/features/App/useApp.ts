@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
-import type { EthereumProvider } from "../../types";
+import type { EthereumProvider } from "@wave3/types";
 import type { UseAppProps } from "features/App/types";
 
 export function useApp(): UseAppProps {
