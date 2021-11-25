@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "start": "vite",
-    "dev": "vite"
+    "dev": "vite",
+    "hardhat:run": "hardhat run scripts/run.ts",
+    "hardhat:deploy:localhost": "hardhat run scripts/deploy.ts --network localhost",
+    "hardhat:deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby"
   },
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
