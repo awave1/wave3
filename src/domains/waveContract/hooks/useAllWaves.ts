@@ -1,9 +1,11 @@
 import { ethers } from "ethers";
 import { useQuery } from "react-query";
 import WavePortalABI from "../../../../artifacts/contracts/WavePortal.sol/WavePortal.json";
+import type { BigNumber } from "ethers";
+import type { Wave } from "@wave3/domains/waveContract/models/Wave";
 
-export function useWaveCount() {
-  return useQuery("waveCount", () => {
+export function useAllWaves() {
+  return useQuery<Wave[]>("allWaves", async () => {
     if (!window.ethereum) {
       throw Error("Missing global window.ethereum provider");
     }
@@ -19,6 +21,17 @@ export function useWaveCount() {
       signer
     );
 
-    return wavePortalContract.getTotalWaveCount();
+    return (await wavePortalContract.getAllWaves()).map(
+      (wave: [string, string, BigNumber]) => {
+        const [fromUser, message, timestamp] = wave;
+
+        return {
+          fromUser,
+          message,
+          // @ts-ignore
+          timestamp: new Date(timestamp * 1000),
+        };
+      }
+    );
   });
 }
