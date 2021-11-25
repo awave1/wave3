@@ -12,7 +12,7 @@ export function Transactions() {
             key={index}
           >
             <div>
-              <h3 className="font-bold uppercase text-gray-50">Address</h3>
+              <h3 className="font-bold uppercase text-gray-50">From</h3>
               <code className="text-gray-50">{wave.fromUser}</code>
             </div>
             <div>
