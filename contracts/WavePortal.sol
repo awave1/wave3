@@ -16,6 +16,8 @@ contract WavePortal {
 	uint256 totalWaveCount;
 	Wave[] waves;
 
+	constructor() payable {}
+
 	function wave(string memory _message) public {
 		totalWaveCount++;
 		console.log("%s waved", msg.sender);
@@ -24,6 +26,18 @@ contract WavePortal {
 		waves.push(Wave(msg.sender, _message, block.timestamp));
 
 		emit WaveEvent(msg.sender, _message, block.timestamp);
+
+		uint256 ethPrizeAmount = 0.0001 ether;
+		require(
+			ethPrizeAmount <= address(this).balance,
+			"Trying to withdraw more money than the account has"
+		);
+
+		(bool success, ) = (msg.sender).call{ value: ethPrizeAmount }("");
+		require(
+			success,
+			"Failed to withdraw money from contract"
+		);
 	}
 
 	function getTotalWaveCount() public view returns (uint256) {
