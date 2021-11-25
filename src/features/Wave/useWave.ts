@@ -7,8 +7,6 @@ import WavePortalABI from "../../../artifacts/contracts/WavePortal.sol/WavePorta
 
 export function useWave(): UseWaveProps {
   const { data: ethProvider } = useWallet();
-  // TODO: move to global state
-  // const [waveCount, setWaveCount] = useState(0);
   const {
     data: waveCount,
     isLoading,
@@ -30,21 +28,22 @@ export function useWave(): UseWaveProps {
     const signer = web3Provider.getSigner();
 
     const wavePortalContract = new ethers.Contract(
-      (import.meta.env?.VITE_WAVE_PORTAL_ADDRESS as string) ??
-        "MISSING_PORTAL_ADDRESS",
+      // @ts-ignore
+      import.meta.env.VITE_WAVE_PORTAL_ADDRESS ?? "MISSING_PORTAL_ADDRESS",
       WavePortalABI?.abi ?? {},
       signer
     );
 
     try {
-      const waveToken = await wavePortalContract.wave();
-      console.log("mining ...", waveToken.hash);
-      setWaveHash(waveToken.hash);
+      // TODO: allow user entry
+      const waveTransaction = await wavePortalContract.wave("Anon wave");
+      console.log("mining ...", waveTransaction.hash);
+      setWaveHash(waveTransaction.hash);
 
       setMining(true);
 
-      await waveToken.wait();
-      console.log("minted ✅", waveToken.hash);
+      await waveTransaction.wait();
+      console.log("minted ✅", waveTransaction.hash);
 
       refetchWaveCount();
     } catch (err) {

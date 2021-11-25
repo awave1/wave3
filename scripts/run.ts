@@ -10,12 +10,14 @@ async function main() {
   console.log("Deployed to: ", waveContract.address);
   console.log("Deployed by: ", owner.address);
 
-  let waveToken = await waveContract.wave("ayooo !");
-  await waveToken.wait();
+  let waveTransaction = await waveContract.wave("ayooo !");
+  await waveTransaction.wait();
 
   const [_, randomPerson] = await ethers.getSigners();
-  waveToken = await waveContract.connect(randomPerson).wave("Another one");
-  await waveToken.wait();
+  waveTransaction = await waveContract
+    .connect(randomPerson)
+    .wave("Another one");
+  await waveTransaction.wait();
 
   const allWaves = await waveContract.getAllWaves();
   console.log(allWaves);

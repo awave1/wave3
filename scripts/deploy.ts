@@ -7,8 +7,8 @@ async function main() {
   console.log(`Deploying contracts with account: ${deployer.address}`);
   console.log(`Account balance: ${accountBalance}`);
 
-  const WaveToken = await ethers.getContractFactory("WavePortal");
-  const portal = await WaveToken.deploy();
+  const WavePortal = await ethers.getContractFactory("WavePortal");
+  const portal = await WavePortal.deploy();
   await portal.deployed();
 
   console.log(`WavePortal address: ${portal.address}`);
