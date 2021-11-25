@@ -14,7 +14,7 @@
       "@wave3/*": ["./src/*"],
       "features/*": ["./src/features/*"],
       "domains/*": ["./src/domains/*"],
-      "abi/*": ["./artifacts/*"]
+      "app/*": ["./src/app/*"]
     },
     "outDir": "dist",
     "declaration": true,

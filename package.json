@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
+    "@reduxjs/toolkit": "^1.6.2",
     "@vanilla-extract/css": "^1.6.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-query": "^3.33.5",
+    "react-redux": "^7.2.6",
     "react-spring": "^9.3.2"
   },
   "devDependencies": {

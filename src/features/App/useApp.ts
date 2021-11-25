@@ -1,9 +1,12 @@
 import { useState } from "react";
 import type { UseAppProps } from "features/App/types";
 import { useWallet } from "domains/wallet/hooks/useWallet";
+import { useAppDispatch, useAppSelector } from "app/store/hooks";
+import { login } from "@wave3/features/App/store/appSlice";
 
 export function useApp(): UseAppProps {
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const userAddress = useAppSelector((state) => state.app.userAddress);
+  const dispatch = useAppDispatch();
   const { isLoading, isError, data: ethProvider } = useWallet();
 
   const onConnectWalletClicked = async () => {
@@ -12,7 +15,7 @@ export function useApp(): UseAppProps {
       return;
     }
 
-    if (currentUser) {
+    if (userAddress) {
       return;
     }
 
@@ -20,12 +23,16 @@ export function useApp(): UseAppProps {
       method: "eth_requestAccounts",
     })) as string[];
 
-    setCurrentUser(accounts[0]);
+    if (accounts.length > 0) {
+      dispatch(login(accounts[0]));
+    } else {
+      console.error("Failed to login: no accounts found");
+    }
   };
 
   return {
     models: {
-      user: currentUser,
+      user: userAddress,
       active: !!ethProvider && !isLoading && !isError,
       isLoading,
     },
