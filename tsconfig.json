@@ -25,6 +25,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["./scripts", "./test", "./typechain", "./src"],
+  "include": ["./scripts", "./test", "./typechain", "./src", "./env.d.ts"],
   "files": ["./hardhat.config.ts"]
 }
