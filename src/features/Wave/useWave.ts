@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { useWallet } from "domains/wallet/hooks/useWallet";
-import { UseWaveProps } from "features/Wave/types";
 import { useWaveCount } from "domains/waveContract/hooks/useWaveCount";
 import WavePortalABI from "../../../artifacts/contracts/WavePortal.sol/WavePortal.json";
+import type { ChangeEvent } from "react";
+import type { UseWaveProps } from "features/Wave/types";
 
 export function useWave(): UseWaveProps {
   const { data: ethProvider } = useWallet();
@@ -15,6 +16,7 @@ export function useWave(): UseWaveProps {
   } = useWaveCount();
   const [mining, setMining] = useState(false);
   const [waveHash, setWaveHash] = useState("");
+  const [message, setMessage] = useState("");
 
   const onWaveClicked = async () => {
     if (!ethProvider) {
@@ -35,8 +37,9 @@ export function useWave(): UseWaveProps {
     );
 
     try {
-      // TODO: allow user entry
-      const waveTransaction = await wavePortalContract.wave("Anon wave");
+      const waveTransaction = await wavePortalContract.wave(
+        message.length === 0 ? "Anon waved" : message
+      );
       console.log("mining ...", waveTransaction.hash);
       setWaveHash(waveTransaction.hash);
 
@@ -50,7 +53,12 @@ export function useWave(): UseWaveProps {
       console.error("Failed to mint the wave", err);
     } finally {
       setMining(false);
+      setMessage("");
     }
+  };
+
+  const onMessageInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(event.target.value);
   };
 
   return {
@@ -58,9 +66,11 @@ export function useWave(): UseWaveProps {
       waveCount: isLoading || isError ? 0 : waveCount,
       mining,
       waveHash,
+      message,
     },
     handlers: {
       onWaveClicked,
+      onMessageInput,
     },
   };
 }

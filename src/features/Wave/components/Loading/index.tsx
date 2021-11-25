@@ -1,4 +1,3 @@
-// import { LoadingStyle } from "features/Wave/components/Loading/style.css";
 import { useSprings, useSpring, animated } from "react-spring";
 
 export const Loading = ({ hash }: { hash: string }) => {
@@ -18,7 +17,7 @@ export const Loading = ({ hash }: { hash: string }) => {
 
   const codeSprings = useSprings(
     text.length,
-    text.map((t, i) => ({ ...codeElementSpringProps, delay: 256 * i }))
+    text.map((t, i) => ({ ...codeElementSpringProps, delay: 300 * i }))
   );
 
   return (
