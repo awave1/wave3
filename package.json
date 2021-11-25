@@ -8,7 +8,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "hardhat compile && vite build",
+    "build": "npx concurrently \"hardhat compile\" \"vite build\"",
     "hardhat:run": "hardhat run scripts/run.ts",
     "hardhat:deploy:localhost": "hardhat run scripts/deploy.ts --network localhost",
     "hardhat:deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby"
